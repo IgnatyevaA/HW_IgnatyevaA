@@ -17,6 +17,8 @@ def mask_account_card(info_account_or_card: str) -> str:
             card_split = info_account_or_card.split()
             card_number = card_split[-1]
             masked_number = get_mask_card_number(card_number)
+            if masked_number is None:
+                return 'Некорректный ввод данных'
             return info_account_or_card.replace(card_number, masked_number)
     except ValueError:
         return 'Некорректный ввод данных'
