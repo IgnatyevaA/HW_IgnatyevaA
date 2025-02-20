@@ -23,16 +23,32 @@
 
 ```python
 from src.processing import filter_by_state, sort_by_date
+from src.generators import filter_by_currency, transaction_descriptions, card_number_generator
+from tests.conftest import transactions
 
 # Пример использования filter_by_state
-transactions = [
+transactions1 = [
     {'id': 41428829, 'state': 'EXECUTED', 'date': '2019-07-03T18:35:29.512364'},
     {'id': 59402872, 'state': 'CANCELLED', 'date': '2018-09-17T21:27:25.241241'}
 ]
-executed_transactions = filter_by_state(transactions)
+executed_transactions = filter_by_state(transactions1)
 
 # Пример использования sort_by_date
-sorted_transactions = sort_by_date(transactions)
+sorted_transactions = sort_by_date(transactions1)
+
+# Пример использования filter_by_currency
+usd_transactions = filter_by_currency(transactions, "USD")
+for _ in range(2):
+ print(next(usd_transactions))
+
+# Пример использования transaction_descriptions
+descriptions = transaction_descriptions(transactions)
+for _ in range(5):
+ print(next(descriptions))
+
+# Пример использования card_number_generator
+for card_number in card_number_generator(1, 5):
+ print(card_number)
 ```
 
 ## Тестирование
@@ -43,8 +59,9 @@ sorted_transactions = sort_by_date(transactions)
 ```
 File	        statements  missing  excluded   coverage
 src\__init__.py	    0	        0       0         100%
-src\masks.py	    21	        4       0         81%
+src\generators.py   9           0       0         100%
+src\masks.py	    23	        4       0         83%
 src\processing.py   11	        2       0         82%
-src\widget.py	    26	        1       0         96%
-Total	            58	        7       0         88%
+src\widget.py	    28	        3       0         89%
+Total	            71	        9       0         87%
 ```
