@@ -50,6 +50,19 @@ for _ in range(5):
 for card_number in card_number_generator(1, 5):
  print(card_number)
 ```
+Пример использования декоратора:
+
+```
+from src.decorators import log
+
+@log(filename='')
+def my_function(x, y):
+    return x + y
+
+my_function(1, 2)
+
+# >>> my_function ok
+```
 
 ## Тестирование
 
@@ -59,6 +72,7 @@ for card_number in card_number_generator(1, 5):
 ```
 File	        statements  missing  excluded   coverage
 src\__init__.py	    0	        0       0         100%
+src\decorators.py   18          2       0         89%
 src\generators.py   9           0       0         100%
 src\masks.py	    23	        4       0         83%
 src\processing.py   11	        2       0         82%
