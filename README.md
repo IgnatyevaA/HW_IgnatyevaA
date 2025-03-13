@@ -50,7 +50,7 @@ for _ in range(5):
 for card_number in card_number_generator(1, 5):
  print(card_number)
 ```
-Пример использования декоратора:
+Пример использования декоратора:я
 
 ```
 from src.decorators import log
@@ -72,10 +72,13 @@ my_function(1, 2)
 ```
 File	        statements  missing  excluded   coverage
 src\__init__.py	    0	        0       0         100%
-src\decorators.py   18          2       0         89%
-src\generators.py   9           0       0         100%
-src\masks.py	    23	        4       0         83%
-src\processing.py   11	        2       0         82%
-src\widget.py	    28	        3       0         89%
-Total	            71	        9       0         87%
+scr\conftest.py     19          0       0         100%
+src\decorators.py   23          0       0         100%
+scr\external_api.py 37          0       0         100%      
+src\generators.py   14          0       0         100% 
+src\masks.py	    17	        0       0         100%
+src\processing.py   11	        0       0         100%
+src\utils.py        18          0       0         100%
+src\widget.py	    20	        0       0         100%
+Total	            159	        0       0         100%
 ```
