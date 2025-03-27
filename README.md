@@ -50,6 +50,30 @@ for _ in range(5):
 for card_number in card_number_generator(1, 5):
  print(card_number)
 ```
+
+Примеры использования новых функций:
+
+```python
+from src.helper import read_csv_file, read_excel_file
+
+# Пример использования search_transactions_by_description
+transactions = [
+    {'description': 'Перевод на карту', 'amount': '1000 руб'},
+    {'description': 'Оплата счета', 'amount': '200 USD'},
+    {'description': 'Перевод организации', 'amount': '300 руб'}
+]
+search_string = "Перевод"
+filtered_transactions = read_csv_file(transactions, search_string)
+
+# Пример использования count_transactions_by_category
+categories = ['Перевод', 'Оплата']
+category_counts = read_excel_file(transactions, categories)
+print(category_counts)
+# >>> {'Перевод': 2, 'Оплата': 1}
+```
+
+
+```
 Пример использования декоратора:я
 
 ```
