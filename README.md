@@ -71,7 +71,7 @@ category_counts = read_excel_file(transactions, categories)
 print(category_counts)
 # >>> {'Перевод': 2, 'Оплата': 1}
 ```
-
+ 
 
 ```
 Пример использования декоратора:я
