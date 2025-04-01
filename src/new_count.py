@@ -4,7 +4,8 @@ from collections import Counter
 def filter_operations_by_string(operations, search_string):
     result = []
     for operation in operations:
-        if any(re.search(search_string, str(value)) for value in operation.values()):
+        search_field = operation.get("description")
+        if re.search(search_string, search_field):
             result.append(operation)
     return result
 
