@@ -1,5 +1,8 @@
+import csv
 import json
 import logging
+
+import pandas as pd
 
 # Настройка логирования
 logger = logging.getLogger(__name__)
@@ -11,24 +14,39 @@ logger.setLevel(logging.DEBUG)
 
 def get_data(path):
     """Принимает на вход путь до JSON-файла и возвращает список словарей с данными о финансовых транзакциях"""
-    try:
-        with open(path, encoding='utf-8') as f:
-            data = json.load(f)
-        if data:
-            logger.info("Возврат списка словарей с данными о финансовых транзакциях")
-            return data
-        else:
-            logger.error("Пустой файл")
-            return []
-    except FileNotFoundError:
-        logger.error("Файл не найден")
-        return []
-    except Exception as e:
-        logger.error(f"Ошибка при чтении файла: {e}")
-        return []
+    operations = []
+    if ".json" in path:
+        try:
+            with open(path, encoding="utf-8") as json_file:
+                operations = json.load(json_file)
+        except Exception:
+            operations = []
+    elif ".csv" in path:
+        try:
+            with open(path, encoding="utf-8") as csv_file:
+                reader = csv.DictReader(csv_file, delimiter=";")
+                operations = [row for row in reader]
+        except Exception:
+            operations = []
+    elif ".xlsx" in path:
+        try:
+            df = pd.read_excel(path)
+            operations = df.to_dict(orient="records")
+        except Exception:
+            operations = []
 
-# Пример использования функции
-if __name__ == "__main__":
-    path = "path/to/your/file.json"
-    data = get_data(path)
-    print(f"Данные из файла: {data}")
+    return operations
+
+def done_as_json(lst: list[dict]) -> list[dict]:
+    normalized = []
+    for t in lst:
+        if "operationAmount" not in t:
+            t["operationAmount"] = {
+                "amount": t.pop("amount"),
+                "currency": {
+                    "name": t.pop("currency_name"),
+                    "code": t.pop("currency_code"),
+                },
+            }
+        normalized.append(t)
+    return normalized

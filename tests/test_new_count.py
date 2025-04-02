@@ -13,7 +13,7 @@ def test_filter_operations_by_string():
                     "code": "RUB"
                 }
             },
-            "description": "Перевод организации",
+            "description": "Открытие вклада",
             "from": "Maestro 1596837868705199",
             "to": "Счет 64686473678894779589"
         },
@@ -43,8 +43,7 @@ def test_filter_operations_by_string():
                     "code": "USD"
                 }
             },
-            "description": "Перевод организации",
-            "from": "Счет 75106830613657916952",
+            "description": "Открытие вклада",
             "to": "Счет 11776614605963066702"
         }
     ]
@@ -67,7 +66,7 @@ def test_filter_operations_by_string():
         }
     ]
 
-    assert expected_result == filter_operations_by_string(operations, 'MasterCard')
+    assert expected_result == filter_operations_by_string(operations, 'организации')
 
 def test_filter_operations_by_string_empty():
     operations = [

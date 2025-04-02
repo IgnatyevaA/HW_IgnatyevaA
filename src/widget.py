@@ -1,38 +1,31 @@
-from datetime import datetime
+from typing import Union
 
 from src.masks import get_mask_account, get_mask_card_number
 
 
-def mask_account_card(info_account_or_card: str) -> str:
-    """Обработка информации о о картах и счетах"""
-    try:
-        if info_account_or_card == '':
-            return ''
-        elif "Счет" in info_account_or_card:
-            account_split = info_account_or_card.split()
-            account_number = account_split[-1]
-            masked_number = get_mask_account(account_number)
-            return info_account_or_card.replace(account_number, masked_number)
-        else:
-            card_split = info_account_or_card.split()
-            card_number = card_split[-1]
-            masked_number = get_mask_card_number(card_number)
-            if masked_number is None:
-                return 'Некорректный ввод данных'
-            return info_account_or_card.replace(card_number, masked_number)
-    except ValueError:
-        return 'Некорректный ввод данных'
+def mask_account_card(name_card: Union[str, None]) -> str:
+    """Функция для маскировки карты или счета"""
+    if not name_card or not isinstance(name_card, str):
+        return "Нет данных"
+
+    digits = "".join(ch for ch in name_card if ch.isdigit())
+
+    if "счет" in name_card.lower() or len(digits) == 20:
+        return f"Счет {get_mask_account(digits)}"
+
+    letters = "".join(ch for ch in name_card if ch.isalpha() or ch == " ")
+    if len(digits) == 16:
+        return f"{letters}{get_mask_card_number(digits)}"
+
+    return "Ошибка! Введите корректный номер банковской карты или счета."
 
 
 
-def get_date(date_str: str) -> str:
-    """Функция, которая переделывает входную строку в ДД.ММ.ГГГГ"""
-    try:
-        if date_str == '':
-            return ''
-        else:
-            date_obj = datetime.fromisoformat(date_str)
-            formatted_date = date_obj.strftime("%d.%m.%Y")
-            return formatted_date
-    except ValueError:
-        return 'Некорректный ввод данных'
+
+
+def get_date(date: str) -> str:
+    """Функция для показа даты в формате ДД.ММ.ГГГГ"""
+    if "T" in date:
+        year, month, day = date[0:4], date[5:7], date[8:10]
+        return f"{day}.{month}.{year}"
+    return "Ошибка! Введите корректный формат даты."
