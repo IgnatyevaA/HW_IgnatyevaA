@@ -8,24 +8,9 @@ def filter_by_state(operations: list, state: str='EXECUTED') -> list:
         return 'Некорректный ввод данных'
 
 
-def sort_by_date(operations: list, descending: bool=True) -> list:
+def sort_by_date(operations: list[dict], descending: bool=True) -> list[dict]:
     """Сортирует список словарей по значению ключа 'date'"""
-    operations_with_datetime = [
-        {**operation, 'date': datetime.fromisoformat(operation['date'])}
-        for operation in operations
-    ]
-
-    # Сортируем список по ключу 'date'
-    sorted_operations = sorted(
-        operations_with_datetime,
-        key=lambda x: x['date'],
-        reverse=descending
+    sorted_values = sorted(
+        operations, key=lambda value: value["date"], reverse=descending
     )
-
-    # Преобразуем объекты datetime обратно в строки
-    sorted_operations_with_str_date = [
-        {**operation, 'date': operation['date'].isoformat()}
-        for operation in sorted_operations
-    ]
-
-    return sorted_operations_with_str_date
+    return sorted_values

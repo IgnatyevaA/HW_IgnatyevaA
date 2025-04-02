@@ -1,7 +1,10 @@
-def filter_by_currency(lst, string):
-    return (transaction for transaction in lst
-            if transaction.get("operationAmount").get("currency").get("code") == string)
-
+def filter_by_currency(lst, string = 'RUB'):
+    return [
+        transaction
+        for transaction in lst
+        if transaction.get("operationAmount", {}).get("currency", {}).get("code")
+        == string
+    ]
 
 def transaction_descriptions(lst):
     for transaction in lst:
